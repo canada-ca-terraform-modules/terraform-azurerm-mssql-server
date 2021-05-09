@@ -1,0 +1,140 @@
+# Part of a hack for module-to-module dependencies.
+# https://github.com/hashicorp/terraform/issues/1178#issuecomment-449158607
+# and
+# https://github.com/hashicorp/terraform/issues/1178#issuecomment-473091030
+# Make sure to add this null_resource.dependency_getter to the `depends_on`
+# attribute to all resource(s) that will be constructed first within this
+# module:
+resource "null_resource" "dependency_getter" {
+  triggers = {
+    my_dependencies = "${join(",", var.dependencies)}"
+  }
+
+  lifecycle {
+    ignore_changes = [
+      triggers["my_dependencies"],
+    ]
+  }
+}
+
+resource "azurerm_mssql_server" "mssql" {
+  name                = var.name
+  location            = var.location
+  resource_group_name = var.resource_group
+
+  administrator_login          = var.administrator_login
+  administrator_login_password = data.azurerm_key_vault_secret.sqlhstsvc.value
+
+  version = var.mssql_version
+
+  minimum_tls_version = var.ssl_minimal_tls_version_enforced
+
+  azuread_administrator {
+    login_username = var.active_directory_administrator_login_username
+    object_id      = var.active_directory_administrator_object_id
+    tenant_id      = var.active_directory_administrator_tenant_id
+  }
+
+  identity {
+    type = "SystemAssigned"
+  }
+
+  lifecycle {
+    ignore_changes = [
+      tags
+    ]
+  }
+}
+
+resource "azurerm_role_assignment" "storage" {
+  scope                = data.azurerm_storage_account.storageaccountinfo.id
+  role_definition_name = "Storage Blob Data Contributor"
+  principal_id         = azurerm_mssql_server.mssql.identity.0.principal_id
+
+  depends_on = [
+    azurerm_mssql_server.mssql,
+    azurerm_sql_firewall_rule.mssql
+  ]
+}
+
+resource "azurerm_sql_firewall_rule" "mssqlclients" {
+  count               = length(var.firewall_rules)
+  name                = azurerm_mssql_server.mssql.name
+  resource_group_name = var.resource_group
+  server_name         = azurerm_mssql_server.mssql.name
+  start_ip_address    = var.firewall_rules[count.index]
+  end_ip_address      = var.firewall_rules[count.index]
+}
+
+resource "azurerm_mssql_server_extended_auditing_policy" "mssql" {
+  server_id              = azurerm_mssql_server.mssql.id
+  storage_endpoint       = data.azurerm_storage_account.storageaccountinfo.primary_blob_endpoint
+  retention_in_days      = var.retention_days
+  log_monitoring_enabled = true
+
+  depends_on = [
+    azurerm_role_assignment.storage,
+    azurerm_mssql_server_security_alert_policy.mssql
+  ]
+}
+
+resource "azurerm_mssql_server_security_alert_policy" "mssql" {
+  resource_group_name = var.resource_group
+  server_name         = azurerm_mssql_server.mssql.name
+  state               = "Enabled"
+  retention_days      = var.retention_days
+
+  email_addresses = var.emails
+
+  depends_on = [
+    azurerm_role_assignment.storage
+  ]
+}
+
+resource "azurerm_mssql_server_vulnerability_assessment" "mssql" {
+  server_security_alert_policy_id = azurerm_mssql_server_security_alert_policy.mssql.id
+  storage_container_path          = "${data.azurerm_storage_account.storageaccountinfo.primary_blob_endpoint}vulnerability-assessment/"
+
+  recurring_scans {
+    enabled                   = true
+    email_subscription_admins = true
+    emails                    = var.emails
+  }
+
+  depends_on = [
+    azurerm_role_assignment.storage,
+    azurerm_mssql_server_security_alert_policy.mssql
+  ]
+
+}
+
+// Configure Networking
+//
+
+resource "azurerm_sql_firewall_rule" "mssql" {
+  name                = "AllowAzure"
+  resource_group_name = var.resource_group
+  server_name         = azurerm_mssql_server.mssql.name
+  start_ip_address    = "0.0.0.0"
+  end_ip_address      = "0.0.0.0"
+
+}
+#
+resource "azurerm_sql_virtual_network_rule" "AllowWithinEnvironment" {
+  for_each            = toset(var.list_of_subnets)
+  name                = "rule${index(var.list_of_subnets, each.value)}"
+  resource_group_name = var.resource_group
+  server_name         = azurerm_mssql_server.mssql.name
+  subnet_id           = each.value
+}
+
+# Part of a hack for module-to-module dependencies.
+# https://github.com/hashicorp/terraform/issues/1178#issuecomment-449158607
+resource "null_resource" "dependency_setter" {
+  # Part of a hack for module-to-module dependencies.
+  # https://github.com/hashicorp/terraform/issues/1178#issuecomment-449158607
+  # List resource(s) that will be constructed last within the module.
+  depends_on = [
+    azurerm_mssql_server.mssql
+  ]
+}
