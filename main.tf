@@ -23,7 +23,7 @@ resource "azurerm_mssql_server" "mssql" {
   resource_group_name = var.resource_group
 
   administrator_login          = var.administrator_login
-  administrator_login_password = data.azurerm_key_vault_secret.sqlhstsvc.value
+  administrator_login_password = length(data.azurerm_key_vault_secret.sqlhstsvc) > 0 ? data.azurerm_key_vault_secret.sqlhstsvc[0].value : var.administrator_login_password
 
   version = var.mssql_version
 
@@ -47,7 +47,9 @@ resource "azurerm_mssql_server" "mssql" {
 }
 
 resource "azurerm_role_assignment" "storage" {
-  scope                = data.azurerm_storage_account.storageaccountinfo.id
+  count = var.keyvault_enable ? 1 : 0
+
+  scope                = data.azurerm_storage_account.storageaccountinfo[0].id
   role_definition_name = "Storage Blob Data Contributor"
   principal_id         = azurerm_mssql_server.mssql.identity.0.principal_id
 
@@ -67,8 +69,10 @@ resource "azurerm_sql_firewall_rule" "mssqlclients" {
 }
 
 resource "azurerm_mssql_server_extended_auditing_policy" "mssql" {
+  count = var.keyvault_enable ? 1 : 0
+
   server_id              = azurerm_mssql_server.mssql.id
-  storage_endpoint       = data.azurerm_storage_account.storageaccountinfo.primary_blob_endpoint
+  storage_endpoint       = data.azurerm_storage_account.storageaccountinfo[0].primary_blob_endpoint
   retention_in_days      = var.retention_days
   log_monitoring_enabled = true
 
@@ -92,8 +96,10 @@ resource "azurerm_mssql_server_security_alert_policy" "mssql" {
 }
 
 resource "azurerm_mssql_server_vulnerability_assessment" "mssql" {
+  count = var.keyvault_enable ? 1 : 0
+
   server_security_alert_policy_id = azurerm_mssql_server_security_alert_policy.mssql.id
-  storage_container_path          = "${data.azurerm_storage_account.storageaccountinfo.primary_blob_endpoint}vulnerability-assessment/"
+  storage_container_path          = "${data.azurerm_storage_account.storageaccountinfo[0].primary_blob_endpoint}vulnerability-assessment/"
 
   recurring_scans {
     enabled                   = true

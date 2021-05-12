@@ -12,6 +12,10 @@ variable "administrator_login" {
   default     = "sqlhstsvc"
 }
 
+variable "administrator_login_password" {
+  description = "(Required) The Password associated with the administrator_login for the PostgreSQL Server."
+}
+
 variable "retention_days" {
   description = "Specifies the retention in days for logs for this MSSQL Server"
   default     = 90
@@ -83,4 +87,9 @@ variable "kv_rg" {
 variable "storageaccountinfo_resource_group_name" {
   description = "The storageaccountinfo resource group name"
   default     = ""
+}
+
+variable "keyvault_enable" {
+  description = "(Optional) Enable Key Vault for passwords."
+  default     = false
 }
