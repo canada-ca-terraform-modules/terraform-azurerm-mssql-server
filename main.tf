@@ -69,10 +69,11 @@ resource "azurerm_sql_firewall_rule" "mssqlclients" {
 }
 
 resource "azurerm_mssql_server_extended_auditing_policy" "mssql" {
-  count = var.keyvault_enable ? 1 : 0
+  server_id = azurerm_mssql_server.mssql.id
 
-  server_id              = azurerm_mssql_server.mssql.id
-  storage_endpoint       = data.azurerm_storage_account.storageaccountinfo[0].primary_blob_endpoint
+  storage_endpoint           = var.keyvault_enable ? data.azurerm_storage_account.storageaccountinfo[0].primary_blob_endpoint : azurerm_storage_account.mssql[0].primary_blob_endpoint
+  storage_account_access_key = var.keyvault_enable ? data.azurerm_storage_account.storageaccountinfo[0].primary_access_key : azurerm_storage_account.mssql[0].primary_access_key
+
   retention_in_days      = var.retention_days
   log_monitoring_enabled = true
 
@@ -85,8 +86,12 @@ resource "azurerm_mssql_server_extended_auditing_policy" "mssql" {
 resource "azurerm_mssql_server_security_alert_policy" "mssql" {
   resource_group_name = var.resource_group
   server_name         = azurerm_mssql_server.mssql.name
-  state               = "Enabled"
-  retention_days      = var.retention_days
+
+  storage_endpoint           = var.keyvault_enable ? data.azurerm_storage_account.storageaccountinfo[0].primary_blob_endpoint : azurerm_storage_account.mssql[0].primary_blob_endpoint
+  storage_account_access_key = var.keyvault_enable ? data.azurerm_storage_account.storageaccountinfo[0].primary_access_key : azurerm_storage_account.mssql[0].primary_access_key
+
+  state          = "Enabled"
+  retention_days = var.retention_days
 
   email_addresses = var.emails
 
@@ -96,10 +101,10 @@ resource "azurerm_mssql_server_security_alert_policy" "mssql" {
 }
 
 resource "azurerm_mssql_server_vulnerability_assessment" "mssql" {
-  count = var.keyvault_enable ? 1 : 0
-
   server_security_alert_policy_id = azurerm_mssql_server_security_alert_policy.mssql.id
-  storage_container_path          = "${data.azurerm_storage_account.storageaccountinfo[0].primary_blob_endpoint}vulnerability-assessment/"
+
+  storage_container_path     = var.keyvault_enable ? "${data.azurerm_storage_account.storageaccountinfo[0].primary_blob_endpoint}vulnerability-assessment/" : "${azurerm_storage_account.mssql[0].primary_blob_endpoint}${azurerm_storage_container.mssql[0].name}/"
+  storage_account_access_key = var.keyvault_enable ? data.azurerm_storage_account.storageaccountinfo[0].primary_access_key : azurerm_storage_account.mssql[0].primary_access_key
 
   recurring_scans {
     enabled                   = true
@@ -125,7 +130,7 @@ resource "azurerm_sql_firewall_rule" "mssql" {
   end_ip_address      = "0.0.0.0"
 
 }
-#
+
 resource "azurerm_sql_virtual_network_rule" "AllowWithinEnvironment" {
   for_each            = toset(var.list_of_subnets)
   name                = "rule${index(var.list_of_subnets, each.value)}"
