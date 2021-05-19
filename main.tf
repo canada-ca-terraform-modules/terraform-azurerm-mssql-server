@@ -72,7 +72,7 @@ resource "azurerm_mssql_server_extended_auditing_policy" "mssql" {
   server_id = azurerm_mssql_server.mssql.id
 
   storage_endpoint           = var.keyvault_enable ? data.azurerm_storage_account.storageaccountinfo[0].primary_blob_endpoint : azurerm_storage_account.mssql[0].primary_blob_endpoint
-  storage_account_access_key = var.keyvault_enable ? data.azurerm_storage_account.storageaccountinfo[0].primary_access_key : azurerm_storage_account.mssql[0].primary_access_key
+  storage_account_access_key = var.keyvault_enable ? null : azurerm_storage_account.mssql[0].primary_access_key
 
   retention_in_days      = var.retention_days
   log_monitoring_enabled = true
@@ -87,8 +87,8 @@ resource "azurerm_mssql_server_security_alert_policy" "mssql" {
   resource_group_name = var.resource_group
   server_name         = azurerm_mssql_server.mssql.name
 
-  storage_endpoint           = var.keyvault_enable ? data.azurerm_storage_account.storageaccountinfo[0].primary_blob_endpoint : azurerm_storage_account.mssql[0].primary_blob_endpoint
-  storage_account_access_key = var.keyvault_enable ? data.azurerm_storage_account.storageaccountinfo[0].primary_access_key : azurerm_storage_account.mssql[0].primary_access_key
+  storage_endpoint           = var.keyvault_enable ? null : azurerm_storage_account.mssql[0].primary_blob_endpoint
+  storage_account_access_key = var.keyvault_enable ? null : azurerm_storage_account.mssql[0].primary_access_key
 
   state          = "Enabled"
   retention_days = var.retention_days
@@ -104,7 +104,7 @@ resource "azurerm_mssql_server_vulnerability_assessment" "mssql" {
   server_security_alert_policy_id = azurerm_mssql_server_security_alert_policy.mssql.id
 
   storage_container_path     = var.keyvault_enable ? "${data.azurerm_storage_account.storageaccountinfo[0].primary_blob_endpoint}vulnerability-assessment/" : "${azurerm_storage_account.mssql[0].primary_blob_endpoint}${azurerm_storage_container.mssql[0].name}/"
-  storage_account_access_key = var.keyvault_enable ? data.azurerm_storage_account.storageaccountinfo[0].primary_access_key : azurerm_storage_account.mssql[0].primary_access_key
+  storage_account_access_key = var.keyvault_enable ? null : azurerm_storage_account.mssql[0].primary_access_key
 
   recurring_scans {
     enabled                   = true
