@@ -22,6 +22,14 @@ output "sa_primary_access_key" {
   value = azurerm_mssql_server_extended_auditing_policy.mssql.storage_account_access_key
 }
 
+output "assessment_id" {
+  value = azurerm_mssql_server_vulnerability_assessment.mssql.id
+}
+
+output "firewall" {
+  value = azurerm_sql_firewall_rule.mssqlclients
+}
+
 # Part of a hack for module-to-module dependencies.
 # https://github.com/hashicorp/terraform/issues/1178#issuecomment-449158607
 # and
