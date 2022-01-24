@@ -13,6 +13,7 @@ resource "azurerm_storage_account" "mssql" {
   # enable_file_encryption = "True"
   access_tier               = "Hot"
   enable_https_traffic_only = true
+  min_tls_version           = "TLS1_2"
 }
 
 resource "azurerm_storage_container" "mssql" {
