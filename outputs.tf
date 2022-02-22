@@ -19,7 +19,7 @@ output "sa_primary_blob_endpoint" {
 }
 
 output "sa_primary_access_key" {
-  value = azurerm_mssql_server_extended_auditing_policy.mssql.storage_account_access_key
+  value = var.keyvault_enable ? null : azurerm_mssql_server_extended_auditing_policy.mssql.storage_account_access_key
 }
 
 output "assessment_id" {
