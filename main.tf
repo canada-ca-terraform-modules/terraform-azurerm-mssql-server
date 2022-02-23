@@ -10,6 +10,8 @@ resource "azurerm_mssql_server" "mssql" {
 
   minimum_tls_version = var.ssl_minimal_tls_version_enforced
 
+  connection_policy = var.connection_policy
+
   azuread_administrator {
     login_username = var.active_directory_administrator_login_username
     object_id      = var.active_directory_administrator_object_id
