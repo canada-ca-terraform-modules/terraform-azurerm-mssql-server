@@ -1,22 +1,3 @@
-# Part of a hack for module-to-module dependencies.
-# https://github.com/hashicorp/terraform/issues/1178#issuecomment-449158607
-# and
-# https://github.com/hashicorp/terraform/issues/1178#issuecomment-473091030
-# Make sure to add this null_resource.dependency_getter to the `depends_on`
-# attribute to all resource(s) that will be constructed first within this
-# module:
-resource "null_resource" "dependency_getter" {
-  triggers = {
-    my_dependencies = "${join(",", var.dependencies)}"
-  }
-
-  lifecycle {
-    ignore_changes = [
-      triggers["my_dependencies"],
-    ]
-  }
-}
-
 resource "azurerm_mssql_server" "mssql" {
   name                = var.name
   location            = var.location
@@ -47,9 +28,9 @@ resource "azurerm_mssql_server" "mssql" {
 }
 
 resource "azurerm_role_assignment" "storage" {
-  count = var.keyvault_enable ? 1 : 0
+  count = 1
 
-  scope                = data.azurerm_storage_account.storageaccountinfo[0].id
+  scope                = var.keyvault_enable ? data.azurerm_storage_account.storageaccountinfo[0].id : azurerm_storage_account.mssql[0].id
   role_definition_name = "Storage Blob Data Contributor"
   principal_id         = azurerm_mssql_server.mssql.identity.0.principal_id
 
@@ -137,15 +118,4 @@ resource "azurerm_sql_virtual_network_rule" "AllowWithinEnvironment" {
   resource_group_name = var.resource_group
   server_name         = azurerm_mssql_server.mssql.name
   subnet_id           = each.value
-}
-
-# Part of a hack for module-to-module dependencies.
-# https://github.com/hashicorp/terraform/issues/1178#issuecomment-449158607
-resource "null_resource" "dependency_setter" {
-  # Part of a hack for module-to-module dependencies.
-  # https://github.com/hashicorp/terraform/issues/1178#issuecomment-449158607
-  # List resource(s) that will be constructed last within the module.
-  depends_on = [
-    azurerm_mssql_server.mssql
-  ]
 }
