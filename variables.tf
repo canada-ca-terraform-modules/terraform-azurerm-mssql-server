@@ -40,6 +40,11 @@ variable "ssl_minimal_tls_version_enforced" {
   default     = "1.2"
 }
 
+variable "connection_policy" {
+  description = "The connection policy the server will use (Default, Proxy or Redirect)"
+  default     = "Default"
+}
+
 variable "environment" {
   description = "The environment used for keyvault access"
 }
