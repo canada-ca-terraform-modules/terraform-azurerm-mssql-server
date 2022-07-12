@@ -38,7 +38,7 @@ resource "azurerm_role_assignment" "storage" {
 
   depends_on = [
     azurerm_mssql_server.mssql,
-    azurerm_sql_firewall_rule.mssql
+    azurerm_mssql_firewall_rule.mssql
   ]
 }
 
@@ -104,7 +104,7 @@ resource "azurerm_mssql_server_vulnerability_assessment" "mssql" {
 // Configure Networking
 //
 
-resource "azurerm_sql_firewall_rule" "mssql" {
+resource "azurerm_mssql_firewall_rule" "mssql" {
   name                = "AllowAzure"
   server_id         = azurerm_mssql_server.mssql.id
   start_ip_address    = "0.0.0.0"
