@@ -42,11 +42,10 @@ resource "azurerm_role_assignment" "storage" {
   ]
 }
 
-resource "azurerm_sql_firewall_rule" "mssqlclients" {
+resource "azurerm_mssql_firewall_rule" "mssqlclients" {
   count               = length(var.firewall_rules)
   name                = azurerm_mssql_server.mssql.name
-  resource_group_name = var.resource_group
-  server_name         = azurerm_mssql_server.mssql.name
+  server_id           = azurerm_mssql_server.mssql.id
   start_ip_address    = var.firewall_rules[count.index]
   end_ip_address      = var.firewall_rules[count.index]
 }
@@ -107,8 +106,7 @@ resource "azurerm_mssql_server_vulnerability_assessment" "mssql" {
 
 resource "azurerm_sql_firewall_rule" "mssql" {
   name                = "AllowAzure"
-  resource_group_name = var.resource_group
-  server_name         = azurerm_mssql_server.mssql.name
+  server_id         = azurerm_mssql_server.mssql.id
   start_ip_address    = "0.0.0.0"
   end_ip_address      = "0.0.0.0"
 
