@@ -27,5 +27,5 @@ output "assessment_id" {
 }
 
 output "firewall" {
-  value = azurerm_sql_firewall_rule.mssqlclients
+  value = azurerm_mssql_firewall_rule.mssqlclients
 }
