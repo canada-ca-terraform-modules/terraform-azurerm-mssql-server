@@ -98,3 +98,7 @@ variable "keyvault_enable" {
   description = "(Optional) Enable Key Vault for passwords."
   default     = false
 }
+
+variable "private_endpoint" {
+  default = null
+}
