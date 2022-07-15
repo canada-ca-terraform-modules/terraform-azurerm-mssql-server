@@ -116,8 +116,7 @@ resource "azurerm_mssql_firewall_rule" "mssqlclients" {
 resource "azurerm_mssql_virtual_network_rule" "AllowWithinEnvironment" {
   for_each            = toset(var.list_of_subnets)
   name                = "rule${index(var.list_of_subnets, each.value)}"
-  resource_group_name = var.resource_group
-  server_name         = azurerm_mssql_server.mssql.name
+  server_id           = azurerm_mssql_server.mssql.id
   subnet_id           = each.value
 }
 
