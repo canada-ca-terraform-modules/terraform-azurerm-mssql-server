@@ -32,7 +32,7 @@ resource "azurerm_mssql_server" "mssql" {
 resource "azurerm_role_assignment" "storage" {
   count = 1
 
-  scope                = var.keyvault_enable ? data.azurerm_storage_account.storageaccountinfo[0].id : azurerm_storage_account.mssql[0].id
+  scope                = data.azurerm_storage_account.storageaccountinfo[0].id
   role_definition_name = "Storage Blob Data Contributor"
   principal_id         = azurerm_mssql_server.mssql.identity.0.principal_id
 
@@ -42,13 +42,6 @@ resource "azurerm_role_assignment" "storage" {
   ]
 }
 
-resource "azurerm_mssql_firewall_rule" "mssqlclients" {
-  count               = length(var.firewall_rules)
-  name                = azurerm_mssql_server.mssql.name
-  server_id           = azurerm_mssql_server.mssql.id
-  start_ip_address    = var.firewall_rules[count.index]
-  end_ip_address      = var.firewall_rules[count.index]
-}
 
 resource "azurerm_mssql_server_extended_auditing_policy" "mssql" {
   server_id = azurerm_mssql_server.mssql.id
@@ -66,8 +59,8 @@ resource "azurerm_mssql_server_extended_auditing_policy" "mssql" {
 }
 
 resource "azurerm_mssql_server_security_alert_policy" "mssql" {
-  resource_group_name = var.resource_group
   server_name         = azurerm_mssql_server.mssql.name
+  resource_group_name = var.resource_group
 
   storage_endpoint           = var.keyvault_enable ? null : azurerm_storage_account.mssql[0].primary_blob_endpoint
   storage_account_access_key = var.keyvault_enable ? null : azurerm_storage_account.mssql[0].primary_access_key
@@ -109,7 +102,15 @@ resource "azurerm_mssql_firewall_rule" "mssql" {
   server_id         = azurerm_mssql_server.mssql.id
   start_ip_address    = "0.0.0.0"
   end_ip_address      = "0.0.0.0"
+}
 
+
+resource "azurerm_mssql_firewall_rule" "mssqlclients" {
+  count               = length(var.firewall_rules)
+  name                = azurerm_mssql_server.mssql.name
+  server_id           = azurerm_mssql_server.mssql.id
+  start_ip_address    = var.firewall_rules[count.index]
+  end_ip_address      = var.firewall_rules[count.index]
 }
 
 resource "azurerm_mssql_virtual_network_rule" "AllowWithinEnvironment" {
@@ -118,4 +119,18 @@ resource "azurerm_mssql_virtual_network_rule" "AllowWithinEnvironment" {
   resource_group_name = var.resource_group
   server_name         = azurerm_mssql_server.mssql.name
   subnet_id           = each.value
+}
+
+resource "azurerm_private_endpoint" "privateep_server" {
+  name                = "${var.name}endpoint"
+  location            = var.location
+  resource_group_name = var.resource_group
+  subnet_id           = data.azurerm_subnet.Subnet.id
+
+  private_service_connection {
+    name                           = "${var.name}privateserviceconnection"
+    private_connection_resource_id = azurerm_mssql_server.mssql.id
+    is_manual_connection           = false
+    subresource_names              = ["sqlServer"]
+  }
 }

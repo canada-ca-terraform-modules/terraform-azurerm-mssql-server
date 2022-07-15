@@ -30,3 +30,15 @@ data "azurerm_storage_account" "storageaccountinfo" {
   name                = data.azurerm_key_vault_secret.storageaccountname[count.index].value
   resource_group_name = var.storageaccountinfo_resource_group_name
 }
+
+data "azurerm_virtual_network" "Vnet" {
+  name                = var.private_endpoint.vnet_name
+  resource_group_name = var.private_endpoint.vnet_rg_name
+}
+
+
+data "azurerm_subnet" "Subnet" {
+  name                 = var.private_endpoint.subnet_name
+  virtual_network_name = data.azurerm_virtual_network.Vnet.name
+  resource_group_name  = var.private_endpoint.vnet_rg_name
+}
