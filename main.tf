@@ -112,7 +112,7 @@ resource "azurerm_mssql_firewall_rule" "mssql" {
 
 }
 
-resource "azurerm_sql_virtual_network_rule" "AllowWithinEnvironment" {
+resource "azurerm_mssql_virtual_network_rule" "AllowWithinEnvironment" {
   for_each            = toset(var.list_of_subnets)
   name                = "rule${index(var.list_of_subnets, each.value)}"
   resource_group_name = var.resource_group
