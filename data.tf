@@ -27,7 +27,7 @@ data "azurerm_key_vault_secret" "storageaccountname" {
 data "azurerm_storage_account" "storageaccountinfo" {
   count = var.keyvault_enable ? 1 : 0
 
-  name                = data.azurerm_key_vault_secret.storageaccountname[count.index].value
+  name                = "stcsandboxsqlsa" #data.azurerm_key_vault_secret.storageaccountname[count.index].value
   resource_group_name = var.storageaccountinfo_resource_group_name
 }
 
