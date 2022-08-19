@@ -100,8 +100,8 @@ resource "azurerm_mssql_server_vulnerability_assessment" "mssql" {
 resource "azurerm_mssql_firewall_rule" "mssql" {
   name                = "AllowAzure"
   server_id         = azurerm_mssql_server.mssql.id
-  start_ip_address    = "0.0.0.0"
-  end_ip_address      = "0.0.0.0"
+  start_ip_address    = "142.206.2.0"
+  end_ip_address      = "142.206.2.255"
 }
 
 
