@@ -1,6 +1,6 @@
 # Storage Accounts
 
-resource "azurerm_storage_account" "mssql" {
+resource "azurerm_storage_account" "this" {
   count = var.keyvault_enable ? 0 : 1
 
   name                     = "${replace(var.name, "-", "")}mssql"
@@ -16,10 +16,10 @@ resource "azurerm_storage_account" "mssql" {
   min_tls_version           = "TLS1_2"
 }
 
-resource "azurerm_storage_container" "mssql" {
+resource "azurerm_storage_container" "this" {
   count = var.keyvault_enable ? 0 : 1
 
   name                  = "${replace(var.name, "-", "")}mssql"
-  storage_account_name  = azurerm_storage_account.mssql[count.index].name
+  storage_account_name  = azurerm_storage_account.this[count.index].name
   container_access_type = "private"
 }
