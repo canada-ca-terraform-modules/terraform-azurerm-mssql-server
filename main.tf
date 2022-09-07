@@ -102,8 +102,8 @@ resource "azurerm_mssql_server_extended_auditing_policy" "this" {
 resource "azurerm_mssql_server_vulnerability_assessment" "this" {
   server_security_alert_policy_id = azurerm_mssql_server_security_alert_policy.this.id
 
-  storage_container_path     = var.keyvault_enable ? "${data.azurerm_storage_account.storageaccountinfo[0].primary_blob_endpoint}vulnerability-assessment/" : "${azurerm_storage_account.this[0].primary_blob_endpoint}${azurerm_storage_container.this[0].name}/"
-  storage_account_access_key = var.keyvault_enable ? null : azurerm_storage_account.this[0].primary_access_key
+  storage_container_path     = var.kv_enable ? "${data.azurerm_storage_account.storageaccountinfo[0].primary_blob_endpoint}vulnerability-assessment/" : "${azurerm_storage_account.this[0].primary_blob_endpoint}${azurerm_storage_container.this[0].name}/"
+  storage_account_access_key = var.kv_enable ? null : azurerm_storage_account.this[0].primary_access_key
 
   recurring_scans {
     enabled                   = true
