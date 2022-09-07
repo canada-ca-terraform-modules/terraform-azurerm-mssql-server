@@ -1,5 +1,5 @@
 data "azurerm_key_vault" "sqlhstkv" {
-  count = var.keyvault_enable ? 1 : 0
+  count = var.kv_enable ? 1 : 0
 
   name                = var.kv_name
   resource_group_name = var.kv_rg

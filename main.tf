@@ -68,8 +68,6 @@ resource "azurerm_role_assignment" "this" {
 }
 
 
-
-
 resource "azurerm_mssql_server_security_alert_policy" "this" {
   server_name         = azurerm_mssql_server.this.name
   resource_group_name = var.resource_group_name
@@ -101,7 +99,7 @@ resource "azurerm_mssql_server_extended_auditing_policy" "this" {
     azurerm_mssql_server_security_alert_policy.this
   ]
 }
-resource "azurerm_mssql_server_vulnerability_assessment" "mssql" {
+resource "azurerm_mssql_server_vulnerability_assessment" "this" {
   server_security_alert_policy_id = azurerm_mssql_server_security_alert_policy.this.id
 
   storage_container_path     = var.keyvault_enable ? "${data.azurerm_storage_account.storageaccountinfo[0].primary_blob_endpoint}vulnerability-assessment/" : "${azurerm_storage_account.mssql[0].primary_blob_endpoint}${azurerm_storage_container.mssql[0].name}/"
