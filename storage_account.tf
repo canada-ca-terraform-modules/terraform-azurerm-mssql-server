@@ -1,11 +1,11 @@
 # Storage Accounts
 
 resource "azurerm_storage_account" "this" {
-  count = var.keyvault_enable ? 0 : 1
+  count = var.kv_enable ? 0 : 1
 
   name                     = "${replace(var.name, "-", "")}mssql"
   location                 = var.location
-  resource_group_name      = var.resource_group
+  resource_group_name      = var.resource_group_name
   account_tier             = "Standard"
   account_kind             = "StorageV2"
   account_replication_type = "LRS"
@@ -17,7 +17,7 @@ resource "azurerm_storage_account" "this" {
 }
 
 resource "azurerm_storage_container" "this" {
-  count = var.keyvault_enable ? 0 : 1
+  count = var.kv_enable ? 0 : 1
 
   name                  = "${replace(var.name, "-", "")}mssql"
   storage_account_name  = azurerm_storage_account.this[count.index].name
