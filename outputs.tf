@@ -1,17 +1,17 @@
 output "id" {
-  value = azurerm_mssql_server.this.id
+  value = azurerm_mssql_server.mssql.id
 }
 
 output "name" {
-  value = azurerm_mssql_server.this.name
+  value = azurerm_mssql_server.mssql.name
 }
 
 output "identity_tenant_id" {
-  value = azurerm_mssql_server.this.identity[0].tenant_id
+  value = azurerm_mssql_server.mssql.identity[0].tenant_id
 }
 
 output "identity_object_id" {
-  value = azurerm_mssql_server.this.identity[0].principal_id
+  value = azurerm_mssql_server.mssql.identity[0].principal_id
 }
 
 output "sa_primary_blob_endpoint" {
