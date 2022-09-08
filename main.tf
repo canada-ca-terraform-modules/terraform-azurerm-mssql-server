@@ -1,4 +1,4 @@
-resource "azurerm_mssql_server" "this" {
+resource "azurerm_mssql_server" "mssql" {
   name                = var.name
   location            = var.location
   resource_group_name = var.resource_group_name
@@ -32,7 +32,7 @@ resource "azurerm_mssql_server" "this" {
 
 resource "azurerm_mssql_firewall_rule" "mssql" {
   name                = "AllowAzure"
-  server_id         = azurerm_mssql_server.this.id
+  server_id         = azurerm_mssql_server.mssql.id
   start_ip_address    = "142.206.2.0"
   end_ip_address      = "142.206.2.255"
 }
@@ -41,8 +41,8 @@ resource "azurerm_mssql_firewall_rule" "mssql" {
 resource "azurerm_mssql_firewall_rule" "mssqlclients" {
   count               = length(var.firewall_rules)
   
-  name                = azurerm_mssql_server.this.name
-  server_id           = azurerm_mssql_server.this.id
+  name                = azurerm_mssql_server.mssql.name
+  server_id           = azurerm_mssql_server.mssql.id
   start_ip_address    = var.firewall_rules[count.index]
   end_ip_address      = var.firewall_rules[count.index]
 }
@@ -51,7 +51,7 @@ resource "azurerm_mssql_virtual_network_rule" "this" {
   for_each            = toset(var.subnets)
   
   name                = "rule${index(var.subnets, each.value)}"
-  server_id           = azurerm_mssql_server.this.id
+  server_id           = azurerm_mssql_server.mssql.id
   subnet_id           = each.value
 }
 
@@ -59,17 +59,17 @@ resource "azurerm_mssql_virtual_network_rule" "this" {
 resource "azurerm_role_assignment" "this" {
   scope                = data.azurerm_storage_account.storageaccountinfo[0].id
   role_definition_name = "Storage Blob Data Contributor"
-  principal_id         = azurerm_mssql_server.this.identity.0.principal_id
+  principal_id         = azurerm_mssql_server.mssql.identity.0.principal_id
 
   depends_on = [
-    azurerm_mssql_server.this,
+    azurerm_mssql_server.mssql,
     azurerm_mssql_firewall_rule.mssql
   ]
 }
 
 
 resource "azurerm_mssql_server_security_alert_policy" "this" {
-  server_name         = azurerm_mssql_server.this.name
+  server_name         = azurerm_mssql_server.mssql.name
   resource_group_name = var.resource_group_name
 
   storage_endpoint           = var.kv_enable ? null : azurerm_storage_account.this[0].primary_blob_endpoint
@@ -86,7 +86,7 @@ resource "azurerm_mssql_server_security_alert_policy" "this" {
 }
 
 resource "azurerm_mssql_server_extended_auditing_policy" "this" {
-  server_id = azurerm_mssql_server.this.id
+  server_id = azurerm_mssql_server.mssql.id
 
   storage_endpoint           = var.kv_enable ? data.azurerm_storage_account.storageaccountinfo[0].primary_blob_endpoint : azurerm_storage_account.this[0].primary_blob_endpoint
   storage_account_access_key = var.kv_enable ? null : azurerm_storage_account.this[0].primary_access_key
