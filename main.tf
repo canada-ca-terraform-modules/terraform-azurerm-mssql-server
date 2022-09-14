@@ -40,7 +40,7 @@ resource "azurerm_mssql_firewall_rule" "mssql" {
 
 
 resource "azurerm_mssql_firewall_rule" "AllowAzure" {
-  name                = "AllowAzure"
+  name                = "AllowAzureInternal"
   server_id         = azurerm_mssql_server.mssql.id
   start_ip_address    = "0.0.0.0"
   end_ip_address      = "0.0.0.0"
