@@ -67,7 +67,7 @@ resource "azurerm_mssql_virtual_network_rule" "this" {
 resource "azurerm_role_assignment" "this" {
   scope                = data.azurerm_storage_account.storageaccountinfo[0].id
   role_definition_name = "Storage Blob Data Contributor"
-  principal_id         = azurerm_mssql_server.mssql.identity.0.principal_id
+  principal_id         = azurearm_mssql_server.mssql.identity.0.principal_id
 
   depends_on = [
     azurerm_mssql_server.mssql,
