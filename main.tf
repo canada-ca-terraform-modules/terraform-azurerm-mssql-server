@@ -59,7 +59,7 @@ resource "azurerm_mssql_firewall_rule" "mssqlclients" {
 resource "azurerm_mssql_virtual_network_rule" "this" {
   for_each            = toset(var.subnets)
   
-  name                = "${azurerm_virtual_network.Vnet.name}_${each.value}"
+  name                = "${data.azurerm_virtual_network.Vnet.name}_${each.value}"
   server_id           = azurerm_mssql_server.mssql.id
   subnet_id           = each.value
 }
