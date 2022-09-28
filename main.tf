@@ -31,37 +31,37 @@ resource "azurerm_mssql_server" "mssql" {
 
 
 resource "azurerm_mssql_firewall_rule" "mssql" {
-  name                = "AllowSTC"
-  server_id           = azurerm_mssql_server.mssql.id
-  start_ip_address    = "142.206.2.0"
-  end_ip_address      = "142.206.2.255"
+  name             = "AllowSTC"
+  server_id        = azurerm_mssql_server.mssql.id
+  start_ip_address = "142.206.2.0"
+  end_ip_address   = "142.206.2.255"
 }
 
 
 
 resource "azurerm_mssql_firewall_rule" "AllowAzure" {
-  name                = "AllowAzureInternal"
-  server_id         = azurerm_mssql_server.mssql.id
-  start_ip_address    = "0.0.0.0"
-  end_ip_address      = "0.0.0.0"
+  name             = "AllowAzureInternal"
+  server_id        = azurerm_mssql_server.mssql.id
+  start_ip_address = "0.0.0.0"
+  end_ip_address   = "0.0.0.0"
 }
 
 
 resource "azurerm_mssql_firewall_rule" "mssqlclients" {
-  count               = length(var.firewall_rules)
-  
-  name                = azurerm_mssql_server.mssql.name
-  server_id           = azurerm_mssql_server.mssql.id
-  start_ip_address    = var.firewall_rules[count.index]
-  end_ip_address      = var.firewall_rules[count.index]
+  count = length(var.firewall_rules)
+
+  name             = azurerm_mssql_server.mssql.name
+  server_id        = azurerm_mssql_server.mssql.id
+  start_ip_address = var.firewall_rules[count.index]
+  end_ip_address   = var.firewall_rules[count.index]
 }
 
 resource "azurerm_mssql_virtual_network_rule" "this" {
-  for_each            = toset(var.subnets)
-  
-  name                = "${data.azurerm_virtual_network.Vnet.name}_${split("/", each.value)[10]}"
-  server_id           = azurerm_mssql_server.mssql.id
-  subnet_id           = each.value
+  for_each = toset(var.subnets)
+
+  name      = "${data.azurerm_virtual_network.Vnet.name}_${split("/", each.value)[10]}"
+  server_id = azurerm_mssql_server.mssql.id
+  subnet_id = each.value
 }
 
 resource "azurerm_role_assignment" "this" {

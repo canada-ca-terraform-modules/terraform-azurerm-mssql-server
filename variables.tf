@@ -101,5 +101,5 @@ variable "kv_enable" {
 
 variable "private_endpoint" {
   description = "MSSQL Server Virtual network subnet data"
-  default = null
+  default     = null
 }
