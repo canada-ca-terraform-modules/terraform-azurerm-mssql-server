@@ -126,16 +126,16 @@ resource "azurerm_mssql_server_vulnerability_assessment" "this" {
 
 }
 
-resource "azurerm_private_endpoint" "this" {
-  name                = "${var.name}endpoint"
-  location            = var.location
-  resource_group_name = var.resource_group_name
-  subnet_id           = data.azurerm_subnet.Subnet.id
+# resource "azurerm_private_endpoint" "this" {
+#   name                = "${var.name}endpoint"
+#   location            = var.location
+#   resource_group_name = var.resource_group_name
+#   subnet_id           = data.azurerm_subnet.Subnet.id
 
-  private_service_connection {
-    name                           = "${var.name}privateserviceconnection"
-    private_connection_resource_id = azurerm_mssql_server.mssql.id
-    is_manual_connection           = false
-    subresource_names              = ["sqlServer"]
-  }
-}
+#   private_service_connection {
+#     name                           = "${var.name}privateserviceconnection"
+#     private_connection_resource_id = azurerm_mssql_server.mssql.id
+#     is_manual_connection           = false
+#     subresource_names              = ["sqlServer"]
+#   }
+# }
