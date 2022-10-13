@@ -127,7 +127,7 @@ resource "azurerm_mssql_server_vulnerability_assessment" "this" {
 }
 
 resource "azurerm_private_endpoint" "this" {
-  count = var.private_endpoint == null ? 0 : 1
+  count = var.private_endpoint_subnet == null ? 0 : 1
 
   name                = "${var.name}endpoint"
   location            = var.location
