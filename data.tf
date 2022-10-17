@@ -34,6 +34,6 @@ data "azurerm_virtual_network" "Vnet" {
 
 data "azurerm_subnet" "Subnet" {
   virtual_network_name = data.azurerm_virtual_network.Vnet.name
-  name                 = lookup(var.private_endpoint_subnet, "vnet_name", "network-dev-rg")
+  name                 = lookup(var.private_endpoint_subnet, "subnet_name", "network-dev-rg")
   resource_group_name  = lookup(var.private_endpoint_subnet, "vnet_resource_group_name", "devCC-vnet")
 }
