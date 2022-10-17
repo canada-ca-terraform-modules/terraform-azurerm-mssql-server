@@ -132,7 +132,7 @@ resource "azurerm_private_endpoint" "this" {
   name                = "${var.name}endpoint"
   location            = var.location
   resource_group_name = var.resource_group_name
-  subnet_id           = data.azurerm_subnet.Subnet.id
+  subnet_id           = var.private_endpoint_subnet
 
   private_service_connection {
     name                           = "${var.name}privateserviceconnection"

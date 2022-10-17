@@ -101,5 +101,5 @@ variable "kv_enable" {
 
 variable "private_endpoint_subnet" {
   description = "(Optional) Options to enable private endpoint"
-  default     = []
+  default     = null
 }
