@@ -27,13 +27,13 @@ data "azurerm_storage_account" "storageaccountinfo" {
 }
 
 data "azurerm_virtual_network" "Vnet" {
-  name                = var.private_endpoint_subnet.vnet_name
-  resource_group_name = var.private_endpoint_subnet.vnet_resource_group_name
+  name                = lookup(var.private_endpoint_subnet, "vnet_name", "network-dev-rg")
+  resource_group_name = lookup(var.private_endpoint_subnet, "vnet_resource_group_name", "devCC-vnet")
 }
 
 
 data "azurerm_subnet" "Subnet" {
-  name                 = var.private_endpoint_subnet.subnet_name
   virtual_network_name = data.azurerm_virtual_network.Vnet.name
-  resource_group_name  = var.private_endpoint_subnet.vnet_resource_group_name
+  name                 = lookup(var.private_endpoint_subnet, "vnet_name", "network-dev-rg")
+  resource_group_name  = lookup(var.private_endpoint_subnet, "vnet_resource_group_name", "devCC-vnet")
 }
