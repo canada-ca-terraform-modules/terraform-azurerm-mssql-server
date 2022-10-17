@@ -27,13 +27,13 @@ data "azurerm_storage_account" "storageaccountinfo" {
 }
 
 data "azurerm_virtual_network" "Vnet" {
-  name                = var.private_endpoint_subnet == null ? "network-dev-rg" : var.private_endpoint_subnet.vnet_name
-  resource_group_name = var.private_endpoint_subnet == null ? "devCC-vnet" : var.private_endpoint_subnet.vnet_resource_group_name
+  name                = var.private_endpoint_subnet == null ? "${var.environment}CC-vnet" : var.private_endpoint_subnet.vnet_name
+  resource_group_name = var.private_endpoint_subnet == null ? "network-${var.environment}-rg" : var.private_endpoint_subnet.vnet_resource_group_name
 }
 
 
 data "azurerm_subnet" "Subnet" {
   virtual_network_name = data.azurerm_virtual_network.Vnet.name
-  name                 = var.private_endpoint_subnet == null ? "network-dev-rg" : var.private_endpoint_subnet.subnet_name
-  resource_group_name  = var.private_endpoint_subnet == null ? "devCC-vnet" : var.private_endpoint_subnet.vnet_resource_group_name
+  name                 = var.private_endpoint_subnet == null ? "${var.environment}CC-back" : var.private_endpoint_subnet.subnet_name
+  resource_group_name  = var.private_endpoint_subnet == null ? "network-${var.environment}-rg" : var.private_endpoint_subnet.vnet_resource_group_name
 }
