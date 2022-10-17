@@ -25,8 +25,3 @@ data "azurerm_storage_account" "storageaccountinfo" {
   name                = data.azurerm_key_vault_secret.storageaccountname[count.index].value
   resource_group_name = var.sa_resource_group_name
 }
-
-data "azurerm_virtual_network" "vnet" {
-  name                = "DevCC-Vnet"
-  resource_group_name = "network-dev-rg"
-}
