@@ -31,7 +31,7 @@ variable "location" {
   default     = "canadacentral"
 }
 
-variable "resource_group" {
+variable "resource_group_name" {
   description = "The name of the resource group in which to create the MSSQL Server"
 }
 
@@ -54,7 +54,7 @@ variable "firewall_rules" {
   description = "Specifies the Start IP Address associated with this Firewall Rule"
 }
 
-variable "list_of_subnets" {
+variable "subnets" {
   default = []
 }
 
@@ -89,12 +89,17 @@ variable "kv_rg" {
   default     = ""
 }
 
-variable "storageaccountinfo_resource_group_name" {
+variable "sa_resource_group_name" {
   description = "The storageaccountinfo resource group name"
   default     = ""
 }
 
-variable "keyvault_enable" {
+variable "kv_enable" {
   description = "(Optional) Enable Key Vault for passwords."
   default     = false
+}
+
+variable "private_endpoint_subnet" {
+  description = "(Optional) Options to enable private endpoint"
+  default     = null
 }
