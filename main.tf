@@ -38,7 +38,6 @@ resource "azurerm_mssql_firewall_rule" "mssql" {
 }
 
 
-
 resource "azurerm_mssql_firewall_rule" "AllowAzure" {
   name             = "AllowAzureInternal"
   server_id        = azurerm_mssql_server.mssql.id
@@ -65,6 +64,7 @@ resource "azurerm_mssql_virtual_network_rule" "this" {
 }
 
 resource "azurerm_role_assignment" "this" {
+  name                 = "${azurerm_mssql_server.mssql.name}-ra"
   scope                = data.azurerm_storage_account.storageaccountinfo[0].id
   role_definition_name = "Storage Blob Data Contributor"
   principal_id         = azurerm_mssql_server.mssql.identity.0.principal_id
