@@ -99,7 +99,12 @@ variable "kv_enable" {
   default     = false
 }
 
-variable "private_endpoint_subnet" {
+variable "private_endpoint_subnet_id" {
   description = "(Optional) Options to enable private endpoint"
+  default     = null
+}
+
+variable "private_dns_zone_ids" {
+  description = "(Optional) Specifies the list of Private DNS Zones to include within the private_dns_zone_group"
   default     = null
 }

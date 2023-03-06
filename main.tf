@@ -127,17 +127,22 @@ resource "azurerm_mssql_server_vulnerability_assessment" "this" {
 }
 
 resource "azurerm_private_endpoint" "this" {
-  count = var.private_endpoint_subnet == null ? 0 : 1
+  count = var.private_endpoint_subnet_id == null ? 0 : 1
 
-  name                = "${var.name}endpoint"
+  name                = "${var.name}-${var.environment}-pe"
   location            = var.location
   resource_group_name = var.resource_group_name
-  subnet_id           = var.private_endpoint_subnet
+  subnet_id           = var.private_endpoint_subnet_id
 
   private_service_connection {
-    name                           = "${var.name}privateserviceconnection"
+    name                           = "${var.name}-${var.environment}-pl"
     private_connection_resource_id = azurerm_mssql_server.mssql.id
     is_manual_connection           = false
     subresource_names              = ["sqlServer"]
+  }
+
+  private_dns_zone_group {
+    name                 = "default"
+    private_dns_zone_ids = var.private_dns_zone_ids
   }
 }
