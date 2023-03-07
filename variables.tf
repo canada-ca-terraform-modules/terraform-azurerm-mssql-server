@@ -8,8 +8,7 @@ variable "dependencies" {
 }
 
 variable "administrator_login" {
-  description = "The Administrator Login for the MSSQL Server"
-  default     = "sqlhstsvc"
+  description = "(Required) The Administrator Login for the MSSQL Server"
 }
 
 variable "administrator_login_password" {
@@ -107,4 +106,9 @@ variable "private_endpoint_subnet_id" {
 variable "private_dns_zone_ids" {
   description = "(Optional) Specifies the list of Private DNS Zones to include within the private_dns_zone_group"
   default     = null
+}
+
+variable "tags" {
+  type    = map(string)
+  default = null
 }
