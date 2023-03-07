@@ -79,6 +79,9 @@ No modules.
 | <a name="output_name"></a> [name](#output\_name) | n/a |
 | <a name="output_sa_primary_access_key"></a> [sa\_primary\_access\_key](#output\_sa\_primary\_access\_key) | n/a |
 | <a name="output_sa_primary_blob_endpoint"></a> [sa\_primary\_blob\_endpoint](#output\_sa\_primary\_blob\_endpoint) | n/a |
+
+## History
+
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
 ## Usage
@@ -89,10 +92,10 @@ Examples for this module along with various configurations can be found in the [
 
 * Adheres to the [CIS Microsoft Azure Foundations Benchmark 1.3.0](https://docs.microsoft.com/en-us/azure/governance/policy/samples/cis-azure-1-3-0) for Database Services.
 
-## History
 
 | Date     | Release    | Change                                                                       |
 |----------|------------|------------------------------------------------------------------------------|
+| 20210628 | 20210628.1 | The v1.1.0 release adds keyvaults for secrets and VA baselines               |
 | 20210628 | 20210628.1 | The v1.1.0 release adds keyvaults for secrets and VA baselines               |
 | 20210512 | 20210512.1 | The v1.0.1 release of Terraform module adding optional key vault integration |
 | 20210509 | 20210509.1 | The v1.0.0 release of Terraform module                                       |
