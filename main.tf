@@ -38,7 +38,7 @@ resource "azurerm_mssql_firewall_rule" "AllowAzure" {
 }
 
 
-resource "azurerm_mssql_firewall_rule" "mssqlclients" {
+resource "azurerm_mssql_firewall_rule" "mssql" {
   count = length(var.firewall_rules)
 
   name             = azurerm_mssql_server.mssql.name
