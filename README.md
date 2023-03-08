@@ -47,7 +47,6 @@ No modules.
 | <a name="input_administrator_login"></a> [administrator\_login](#input\_administrator\_login) | (Required) The Administrator Login for the MSSQL Server | `any` | n/a | yes |
 | <a name="input_administrator_login_password"></a> [administrator\_login\_password](#input\_administrator\_login\_password) | (Required) The Password associated with the administrator\_login for the PostgreSQL Server. | `any` | n/a | yes |
 | <a name="input_connection_policy"></a> [connection\_policy](#input\_connection\_policy) | The connection policy the server will use (Default, Proxy or Redirect) | `string` | `"Default"` | no |
-| <a name="input_dependencies"></a> [dependencies](#input\_dependencies) | Dependency management of resources | `list(string)` | n/a | yes |
 | <a name="input_emails"></a> [emails](#input\_emails) | List of email addresses that should recieve the security reports | `list(string)` | `[]` | no |
 | <a name="input_environment"></a> [environment](#input\_environment) | The environment used for keyvault access | `any` | n/a | yes |
 | <a name="input_firewall_rules"></a> [firewall\_rules](#input\_firewall\_rules) | Specifies the Start IP Address associated with this Firewall Rule | `list(string)` | n/a | yes |
@@ -57,6 +56,7 @@ No modules.
 | <a name="input_location"></a> [location](#input\_location) | Specifies the supported Azure location where the resource exists | `string` | `"canadacentral"` | no |
 | <a name="input_mssql_version"></a> [mssql\_version](#input\_mssql\_version) | The version of the MSSQL Server | `string` | `"12.0"` | no |
 | <a name="input_name"></a> [name](#input\_name) | The name of the MSSQL Server | `any` | n/a | yes |
+| <a name="input_primary_mi_id"></a> [primary\_mi\_id](#input\_primary\_mi\_id) | n/a | `any` | `null` | no |
 | <a name="input_private_dns_zone_ids"></a> [private\_dns\_zone\_ids](#input\_private\_dns\_zone\_ids) | (Optional) Specifies the list of Private DNS Zones to include within the private\_dns\_zone\_group | `any` | `null` | no |
 | <a name="input_private_endpoint_subnet_id"></a> [private\_endpoint\_subnet\_id](#input\_private\_endpoint\_subnet\_id) | (Optional) Options to enable private endpoint | `any` | `null` | no |
 | <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | The name of the resource group in which to create the MSSQL Server | `any` | n/a | yes |

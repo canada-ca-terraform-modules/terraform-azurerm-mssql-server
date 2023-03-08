@@ -2,11 +2,6 @@ variable "name" {
   description = "The name of the MSSQL Server"
 }
 
-variable "dependencies" {
-  type        = list(string)
-  description = "Dependency management of resources"
-}
-
 variable "administrator_login" {
   description = "(Required) The Administrator Login for the MSSQL Server"
 }
@@ -110,5 +105,9 @@ variable "private_dns_zone_ids" {
 
 variable "tags" {
   type    = map(string)
+  default = null
+}
+
+variable "primary_mi_id" {
   default = null
 }

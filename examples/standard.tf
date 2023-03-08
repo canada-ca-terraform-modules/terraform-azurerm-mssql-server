@@ -19,8 +19,8 @@ module "sqlserver" {
   resource_group_name          = "hosting-sql-dev-rg"
   administrator_login          = ""
   administrator_login_password = ""
-  firewall_rules               = ["0.0.0.0"] #List of IP addresses: Ex. ["0.0.0.0"]
-  tags                         = {}
+  firewall_rules               = [] #List of IP addresses: Ex. ["0.0.0.0"]
+  tags                         = { "key" : "value" }
 
   /*
   #[Optional] Configurations
@@ -47,7 +47,7 @@ module "sqlserver" {
   active_directory_administrator_tenant_id      = ""
   */
   /*
-  #[Optional] Private Enpoint Configurations
+  #[Optional] Private Endpoint Configurations
   private_endpoint_subnet_id                    = [data.azurerm_subnet.devcc-back.id]
   private_dns_zone_ids                          = [data.azurerm_private_dns_zone.mssql.id]
   */

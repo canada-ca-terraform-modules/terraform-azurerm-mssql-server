@@ -59,7 +59,7 @@ resource "azurerm_role_assignment" "this" {
   description          = "${azurerm_mssql_server.mssql.name}-ra"
   scope                = data.azurerm_storage_account.storageaccountinfo[0].id
   role_definition_name = "Storage Blob Data Contributor"
-  principal_id         = azurerm_mssql_server.mssql.identity.0.principal_id
+  principal_id         = var.primary_mi_id ? var.primary_mi_id : azurerm_mssql_server.mssql.identity.0.principal_id
 
   depends_on = [
     azurerm_mssql_server.mssql,
