@@ -95,7 +95,12 @@ Examples for this module along with various configurations can be found in the [
 
 | Date     | Release    | Change                                                                       |
 |----------|------------|------------------------------------------------------------------------------|
-| 20210628 | 20210628.1 | The v1.1.0 release adds keyvaults for secrets and VA baselines               |
+| 20210628 | 20220628.1 | The v1.1.0 release adds keyvaults for secrets and VA baselines               |
+| 20210628 | 20220628.1 | The v2.1.0 release adds keyvaults for secrets and VA baselines               |
+| 20210628 | 20210628.1 | The v1.1.4 release             |
+| 20210628 | 20210628.1 | The v1.1.3 release               |
+| 20210628 | 20210628.1 | The v1.1.2 release               |
+| 20210628 | 20210628.1 | The v1.1.1 release enforces minimum tls version                              |
 | 20210628 | 20210628.1 | The v1.1.0 release adds keyvaults for secrets and VA baselines               |
 | 20210512 | 20210512.1 | The v1.0.1 release of Terraform module adding optional key vault integration |
 | 20210509 | 20210509.1 | The v1.0.0 release of Terraform module                                       |
