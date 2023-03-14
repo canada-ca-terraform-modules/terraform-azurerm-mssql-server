@@ -7,6 +7,7 @@ ENHANCEMENTS:
 
 BUG FIXES:
 * `azurerm_private_endpoint` - uses existing private zone DNS
+* `azurerm_role_assignment` - can use existing user assigned managed identity
 
 
 ## 2.0.0 (November 3, 2022)

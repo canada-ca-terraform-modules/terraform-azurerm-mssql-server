@@ -56,7 +56,7 @@ No modules.
 | <a name="input_location"></a> [location](#input\_location) | Specifies the supported Azure location where the resource exists | `string` | `"canadacentral"` | no |
 | <a name="input_mssql_version"></a> [mssql\_version](#input\_mssql\_version) | The version of the MSSQL Server | `string` | `"12.0"` | no |
 | <a name="input_name"></a> [name](#input\_name) | The name of the MSSQL Server | `any` | n/a | yes |
-| <a name="input_primary_mi_id"></a> [primary\_mi\_id](#input\_primary\_mi\_id) | n/a | `any` | `null` | no |
+| <a name="input_primary_mi_id"></a> [primary\_mi\_id](#input\_primary\_mi\_id) | (Optional) The ID of the Principal (User, Group or Service Principal) to assign the Role Definition to. | `any` | `null` | no |
 | <a name="input_private_dns_zone_ids"></a> [private\_dns\_zone\_ids](#input\_private\_dns\_zone\_ids) | (Optional) Specifies the list of Private DNS Zones to include within the private\_dns\_zone\_group | `any` | `null` | no |
 | <a name="input_private_endpoint_subnet_id"></a> [private\_endpoint\_subnet\_id](#input\_private\_endpoint\_subnet\_id) | (Optional) Options to enable private endpoint | `any` | `null` | no |
 | <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | The name of the resource group in which to create the MSSQL Server | `any` | n/a | yes |
@@ -64,7 +64,7 @@ No modules.
 | <a name="input_sa_resource_group_name"></a> [sa\_resource\_group\_name](#input\_sa\_resource\_group\_name) | The storageaccountinfo resource group name | `string` | `""` | no |
 | <a name="input_ssl_minimal_tls_version_enforced"></a> [ssl\_minimal\_tls\_version\_enforced](#input\_ssl\_minimal\_tls\_version\_enforced) | The mimimun TLS version to support on the sever | `string` | `"1.2"` | no |
 | <a name="input_subnets"></a> [subnets](#input\_subnets) | n/a | `list` | `[]` | no |
-| <a name="input_tags"></a> [tags](#input\_tags) | n/a | `map(string)` | `null` | no |
+| <a name="input_tags"></a> [tags](#input\_tags) | (Optional) A mapping of tags which should be assigned to this Virtual Machine | `map(string)` | `null` | no |
 
 ## Outputs
 

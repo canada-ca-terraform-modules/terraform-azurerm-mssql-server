@@ -104,10 +104,12 @@ variable "private_dns_zone_ids" {
 }
 
 variable "tags" {
-  type    = map(string)
-  default = null
+  description = "(Optional) A mapping of tags which should be assigned to this Virtual Machine"
+  type        = map(string)
+  default     = null
 }
 
 variable "primary_mi_id" {
-  default = null
+  description = "(Optional) The ID of the Principal (User, Group or Service Principal) to assign the Role Definition to."
+  default     = null
 }
