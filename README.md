@@ -1,6 +1,30 @@
 # Terraform for Azure Managed Database MSSQL Server
 
+**Current Version:** v2.0.1
+
+## Summary 
 Creates MSSQL Server for use with the Azure Managed Database for MSSQL.
+
+Examples for using the module can be found [here](examples/).
+
+Changelog can be found in [CHANGELOG.md](CHANGELOG.md) 
+
+The Server will be created with the following:
+- Seucirty Alert Policy
+- Extedned Auditing Policy
+- Vulnerabilitly Assesemnet
+- System Assigned Managed Identity
+- Allow Azure Internal Firewall Rule
+
+Using this module you will be able to create:
+- [Azure SQL Server](https://docs.microsoft.com/en-us/azure/azure-sql)
+- [Azure Storage Account](https://learn.microsoft.com/en-us/azure/storage/common/storage-account-overview)
+- [Azure Private Endpoint](https://learn.microsoft.com/en-us/azure/private-link/private-endpoint-overview)
+- [Azure Storage Container](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-blobs-introduction) 
+
+### User Input Requirement
+
+See inputs and examples for reference.
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
@@ -79,24 +103,3 @@ No modules.
 | <a name="output_sa_primary_access_key"></a> [sa\_primary\_access\_key](#output\_sa\_primary\_access\_key) | n/a |
 | <a name="output_sa_primary_blob_endpoint"></a> [sa\_primary\_blob\_endpoint](#output\_sa\_primary\_blob\_endpoint) | n/a |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
-
-## Usage
-
-Examples for this module along with various configurations can be found in the [examples/](examples/) folder.
-
-## Security Controls
-
-* Adheres to the [CIS Microsoft Azure Foundations Benchmark 1.3.0](https://docs.microsoft.com/en-us/azure/governance/policy/samples/cis-azure-1-3-0) for Database Services.
-
-
-| Date     | Release    | Change                                                                       |
-|----------|------------|------------------------------------------------------------------------------|
-| 20210628 | 20220628.1 | The v1.1.0 release adds keyvaults for secrets and VA baselines               |
-| 20210628 | 20220628.1 | The v2.1.0 release adds keyvaults for secrets and VA baselines               |
-| 20210628 | 20210628.1 | The v1.1.4 release             |
-| 20210628 | 20210628.1 | The v1.1.3 release               |
-| 20210628 | 20210628.1 | The v1.1.2 release               |
-| 20210628 | 20210628.1 | The v1.1.1 release enforces minimum tls version                              |
-| 20210628 | 20210628.1 | The v1.1.0 release adds keyvaults for secrets and VA baselines               |
-| 20210512 | 20210512.1 | The v1.0.1 release of Terraform module adding optional key vault integration |
-| 20210509 | 20210509.1 | The v1.0.0 release of Terraform module                                       |

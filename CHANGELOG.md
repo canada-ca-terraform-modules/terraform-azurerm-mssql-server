@@ -1,9 +1,10 @@
-## 2.0.1 (March 8, 2022)
+## 2.0.1 (March 17, 2022)
 
 FEATURES:
 
 ENHANCEMENTS:
 * `azurerm_sql_firewall_rule` - remove AllowSTC rule
+* \examples - updated documentation 
 
 BUG FIXES:
 * `azurerm_private_endpoint` - uses existing private zone DNS
