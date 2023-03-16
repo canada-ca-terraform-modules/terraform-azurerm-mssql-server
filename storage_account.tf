@@ -1,5 +1,3 @@
-# Storage Accounts
-
 resource "azurerm_storage_account" "this" {
   count = var.kv_enable ? 0 : 1
 

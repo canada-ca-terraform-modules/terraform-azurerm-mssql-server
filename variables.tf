@@ -2,14 +2,8 @@ variable "name" {
   description = "The name of the MSSQL Server"
 }
 
-variable "dependencies" {
-  type        = list(string)
-  description = "Dependency management of resources"
-}
-
 variable "administrator_login" {
-  description = "The Administrator Login for the MSSQL Server"
-  default     = "sqlhstsvc"
+  description = "(Required) The Administrator Login for the MSSQL Server"
 }
 
 variable "administrator_login_password" {
@@ -99,7 +93,23 @@ variable "kv_enable" {
   default     = false
 }
 
-variable "private_endpoint_subnet" {
+variable "private_endpoint_subnet_id" {
   description = "(Optional) Options to enable private endpoint"
+  default     = null
+}
+
+variable "private_dns_zone_ids" {
+  description = "(Optional) Specifies the list of Private DNS Zones to include within the private_dns_zone_group"
+  default     = null
+}
+
+variable "tags" {
+  description = "(Optional) A mapping of tags which should be assigned to this Virtual Machine"
+  type        = map(string)
+  default     = null
+}
+
+variable "primary_mi_id" {
+  description = "(Optional) The ID of the Principal (User, Group or Service Principal) to assign the Role Definition to."
   default     = null
 }

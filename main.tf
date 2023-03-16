@@ -30,14 +30,6 @@ resource "azurerm_mssql_server" "mssql" {
 }
 
 
-resource "azurerm_mssql_firewall_rule" "mssql" {
-  name             = "AllowSTC"
-  server_id        = azurerm_mssql_server.mssql.id
-  start_ip_address = "142.206.2.0"
-  end_ip_address   = "142.206.2.255"
-}
-
-
 resource "azurerm_mssql_firewall_rule" "AllowAzure" {
   name             = "AllowAzureInternal"
   server_id        = azurerm_mssql_server.mssql.id
@@ -46,7 +38,7 @@ resource "azurerm_mssql_firewall_rule" "AllowAzure" {
 }
 
 
-resource "azurerm_mssql_firewall_rule" "mssqlclients" {
+resource "azurerm_mssql_firewall_rule" "mssql" {
   count = length(var.firewall_rules)
 
   name             = azurerm_mssql_server.mssql.name
@@ -67,7 +59,7 @@ resource "azurerm_role_assignment" "this" {
   description          = "${azurerm_mssql_server.mssql.name}-ra"
   scope                = data.azurerm_storage_account.storageaccountinfo[0].id
   role_definition_name = "Storage Blob Data Contributor"
-  principal_id         = azurerm_mssql_server.mssql.identity.0.principal_id
+  principal_id         = var.primary_mi_id == null ? azurerm_mssql_server.mssql.identity.0.principal_id : var.primary_mi_id
 
   depends_on = [
     azurerm_mssql_server.mssql,
@@ -127,17 +119,22 @@ resource "azurerm_mssql_server_vulnerability_assessment" "this" {
 }
 
 resource "azurerm_private_endpoint" "this" {
-  count = var.private_endpoint_subnet == null ? 0 : 1
+  count = var.private_endpoint_subnet_id == null ? 0 : 1
 
-  name                = "${var.name}endpoint"
+  name                = "${var.name}-${var.environment}-pe"
   location            = var.location
   resource_group_name = var.resource_group_name
-  subnet_id           = var.private_endpoint_subnet
+  subnet_id           = var.private_endpoint_subnet_id
 
   private_service_connection {
-    name                           = "${var.name}privateserviceconnection"
+    name                           = "${var.name}-${var.environment}-pl"
     private_connection_resource_id = azurerm_mssql_server.mssql.id
     is_manual_connection           = false
     subresource_names              = ["sqlServer"]
+  }
+
+  private_dns_zone_group {
+    name                 = "default"
+    private_dns_zone_ids = var.private_dns_zone_ids
   }
 }
