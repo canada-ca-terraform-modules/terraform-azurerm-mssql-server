@@ -10,9 +10,9 @@ Examples for using the module can be found [here](examples/).
 Changelog can be found in [CHANGELOG.md](CHANGELOG.md) 
 
 The Server will be created with the following:
-- Seucirty Alert Policy
-- Extedned Auditing Policy
-- Vulnerabilitly Assesemnet
+- Security Alert Policy
+- Extended Auditing Policy
+- Vulnerability Assesement
 - System Assigned Managed Identity
 - Allow Azure Internal Firewall Rule
 
