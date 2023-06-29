@@ -6,7 +6,7 @@ resource "azurerm_storage_account" "this" {
   resource_group_name      = var.resource_group_name
   account_tier             = "Standard"
   account_kind             = "StorageV2"
-  account_replication_type = "LRS"
+  account_replication_type = var.account_replication_type
   # enable_blob_encryption = "True"
   # enable_file_encryption = "True"
   access_tier               = "Hot"

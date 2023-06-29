@@ -113,3 +113,8 @@ variable "primary_mi_id" {
   description = "(Optional) The ID of the Principal (User, Group or Service Principal) to assign the Role Definition to."
   default     = null
 }
+
+variable "account_replication_type" {
+  description = "(Required) Defines the type of replication to use for this storage account. Valid options are LRS, GRS, RAGRS, ZRS, GZRS and RAGZRS."
+  default     = "LRS"
+}

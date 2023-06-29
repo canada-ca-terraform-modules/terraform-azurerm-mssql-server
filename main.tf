@@ -59,7 +59,20 @@ resource "azurerm_role_assignment" "this" {
   description          = "${azurerm_mssql_server.mssql.name}-ra"
   scope                = data.azurerm_storage_account.storageaccountinfo[0].id
   role_definition_name = "Storage Blob Data Contributor"
-  principal_id         = var.primary_mi_id == null ? azurerm_mssql_server.mssql.identity.0.principal_id : var.primary_mi_id
+  principal_id         = azurerm_mssql_server.mssql.identity.0.principal_id
+
+  depends_on = [
+    azurerm_mssql_server.mssql,
+    azurerm_mssql_firewall_rule.mssql
+  ]
+}
+
+resource "azurerm_role_assignment" "mi" {
+  count                = var.primary_mi_id == null ? 0 : 1
+  description          = "${azurerm_mssql_server.mssql.name}-ura"
+  scope                = data.azurerm_storage_account.storageaccountinfo[0].id
+  role_definition_name = "Storage Blob Data Contributor"
+  principal_id         = var.primary_mi_id
 
   depends_on = [
     azurerm_mssql_server.mssql,
@@ -81,7 +94,8 @@ resource "azurerm_mssql_server_security_alert_policy" "this" {
   email_addresses = var.emails
 
   depends_on = [
-    azurerm_role_assignment.this
+    azurerm_role_assignment.this,
+    azurerm_role_assignment.mi
   ]
 }
 
@@ -96,6 +110,7 @@ resource "azurerm_mssql_server_extended_auditing_policy" "this" {
 
   depends_on = [
     azurerm_role_assignment.this,
+    azurerm_role_assignment.mi,
     azurerm_mssql_server_security_alert_policy.this
   ]
 }
@@ -113,6 +128,7 @@ resource "azurerm_mssql_server_vulnerability_assessment" "this" {
 
   depends_on = [
     azurerm_role_assignment.this,
+    azurerm_role_assignment.mi,
     azurerm_mssql_server_security_alert_policy.this
   ]
 

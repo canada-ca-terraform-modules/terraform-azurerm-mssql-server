@@ -1,4 +1,14 @@
-## 2.0.1 (March 17, 2022)
+## 2.0.2 (June 29, 2023)
+
+FEATURES:
+
+ENHANCEMENTS:
+* `azurerm_storage_account` - account_replication_type made variable 
+
+BUG FIXES:
+* `azurerm_role_assignment` - user assigned managed identity upon recreation made persistent
+
+## 2.0.1 (March 17, 2023)
 
 FEATURES:
 
