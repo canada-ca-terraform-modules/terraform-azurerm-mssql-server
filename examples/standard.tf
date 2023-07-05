@@ -54,7 +54,8 @@ module "sqlserver" {
 
   /*
   #[Optional] Private Endpoint Configurations
-  private_endpoint_subnet_id                    = [data.azurerm_subnet.devcc-back.id]
-  private_dns_zone_ids                          = [data.azurerm_private_dns_zone.mssql.id]
+  private_endpoints = {
+    "pename" = { subnet_id = data.azurerm_subnet.devcc-back.id, private_dns_zone_ids = [data.azurerm_private_dns_zone.mssql.id] }
+  }
   */
 }
