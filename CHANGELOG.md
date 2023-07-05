@@ -1,9 +1,10 @@
-## 2.0.2 (June 29, 2023)
+## 2.0.2 (July 5, 2023)
 
 FEATURES:
 
 ENHANCEMENTS:
 * `azurerm_storage_account` - account_replication_type made variable 
+* `azurerm_private_endpoint` - multiple endpoints can be created
 
 BUG FIXES:
 * `azurerm_role_assignment` - user assigned managed identity upon recreation made persistent
