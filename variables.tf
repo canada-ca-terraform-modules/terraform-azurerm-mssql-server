@@ -113,3 +113,8 @@ variable "primary_mi_id" {
   description = "(Optional) The ID of the Principal (User, Group or Service Principal) to assign the Role Definition to."
   default     = null
 }
+
+variable "express_va_enabled" {
+  description = "Is Express configuration of Vulnerability settings on Microsoft Cloud Defender being used?"
+  default     = true
+}
