@@ -23,7 +23,7 @@ output "sa_primary_access_key" {
 }
 
 output "assessment_id" {
-  value = azurerm_mssql_server_vulnerability_assessment.this.id
+  value = azurerm_mssql_server_vulnerability_assessment.this[0].id
 }
 
 output "firewall" {
