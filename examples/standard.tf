@@ -38,7 +38,7 @@ module "sqlserver" {
   mssql_version                                 = "12.0"
   emails                                        = ["name@domain.ca"]
   retention_days                                = 90
-
+  express_va_enabled                            = true
   */
   /*
   #[Optional] Firewall Configurations
