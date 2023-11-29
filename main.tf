@@ -104,6 +104,7 @@ resource "azurerm_mssql_server_extended_auditing_policy" "this" {
     azurerm_mssql_server_security_alert_policy.this
   ]
 }
+
 resource "azurerm_mssql_server_vulnerability_assessment" "this" {
   count = var.express_va_enabled == true ? 0 : 1
 

@@ -1,4 +1,27 @@
-## 2.0.1 (March 17, 2022)
+## 2.0.1-patch (November 11, 2023)
+
+FEATURES:
+
+ENHANCEMENTS:
+
+BUG FIXES:
+* `azurerm_role_assignment` - only created when using Express Vulnerability Assessment Configuration
+* `azurerm_mssql_server_vulnerability_assessment` - only created when using Express Vulnerability Assessment Configuration
+* `azurerm_mssql_server_extended_auditing_policy` - only created when using Express Vulnerability Assessment Configuration
+* `azurerm_mssql_server_security_alert_policy` - only created when using Express Vulnerability Assessment Configuration
+
+## 2.0.2 (July 5, 2023)
+
+FEATURES:
+
+ENHANCEMENTS:
+* `azurerm_storage_account` - account_replication_type made variable 
+* `azurerm_private_endpoint` - multiple endpoints can be created
+
+BUG FIXES:
+* `azurerm_role_assignment` - user assigned managed identity upon recreation made persistent
+
+## 2.0.1 (March 17, 2023)
 
 FEATURES:
 
