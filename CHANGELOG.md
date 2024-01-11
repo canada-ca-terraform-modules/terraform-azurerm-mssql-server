@@ -1,3 +1,15 @@
+## 2.0.3 (Jan 10, 2024)
+
+FEATURES:
+
+ENHANCEMENTS:
+
+BUG FIXES:
+* `azurerm_role_assignment` - made optional for Express VA Configuration
+* `azurerm_mssql_server_security_alert_policy` -  made optional for Express VA Configuration
+* `azurerm_mssql_server_extended_auditing_policy` -  made optional for Express VA Configuration
+* `azurerm_mssql_server_vulnerability_assessment` -  made optional for Express VA Configuration
+
 ## 2.0.2 (July 5, 2023)
 
 FEATURES:

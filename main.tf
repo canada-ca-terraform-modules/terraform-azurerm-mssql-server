@@ -104,6 +104,8 @@ resource "azurerm_mssql_server_security_alert_policy" "this" {
 }
 
 resource "azurerm_mssql_server_extended_auditing_policy" "this" {
+  count = var.express_va_enabled == true ? 0 : 1
+
   server_id = azurerm_mssql_server.mssql.id
 
   storage_endpoint           = var.kv_enable ? data.azurerm_storage_account.storageaccountinfo[0].primary_blob_endpoint : azurerm_storage_account.this[0].primary_blob_endpoint
@@ -119,9 +121,9 @@ resource "azurerm_mssql_server_extended_auditing_policy" "this" {
   ]
 }
 resource "azurerm_mssql_server_vulnerability_assessment" "this" {
+  count = var.express_va_enabled == true ? 0 : 1
 
-
-  server_security_alert_policy_id = azurerm_mssql_server_security_alert_policy.this.id
+  server_security_alert_policy_id = azurerm_mssql_server_security_alert_policy.this[0].id
 
   storage_container_path     = var.kv_enable ? "${data.azurerm_storage_account.storageaccountinfo[0].primary_blob_endpoint}vulnerability-assessment/" : "${azurerm_storage_account.this[0].primary_blob_endpoint}${azurerm_storage_container.this[0].name}/"
   storage_account_access_key = var.kv_enable ? null : azurerm_storage_account.this[0].primary_access_key
