@@ -1,7 +1,7 @@
 ## 2.0.3 (Jan 10, 2024)
 
 FEATURES:
-
+Supports inheiretance of Express Vulnarability Assesment settings 
 ENHANCEMENTS:
 
 BUG FIXES:
