@@ -7,11 +7,11 @@ resource "azurerm_storage_account" "this" {
   account_tier             = "Standard"
   account_kind             = "StorageV2"
   account_replication_type = var.account_replication_type
-  # enable_blob_encryption = "True"
-  # enable_file_encryption = "True"
-  access_tier               = "Hot"
-  enable_https_traffic_only = true
-  min_tls_version           = "TLS1_2"
+  # enable_blob_encryption  = "True"
+  # enable_file_encryption  = "True"
+  access_tier                = "Hot"
+  https_traffic_only_enabled = true
+  min_tls_version            = "TLS1_2"
 }
 
 resource "azurerm_storage_container" "this" {

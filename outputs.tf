@@ -15,15 +15,15 @@ output "identity_object_id" {
 }
 
 output "sa_primary_blob_endpoint" {
-  value = azurerm_mssql_server_extended_auditing_policy.this.storage_endpoint
+  value = var.express_va_enabled == false ? azurerm_mssql_server_extended_auditing_policy.this[0].storage_endpoint : null
 }
 
 output "sa_primary_access_key" {
-  value = var.kv_enable ? null : azurerm_mssql_server_extended_auditing_policy.this.storage_account_access_key
+  value = var.kv_enable ? null : azurerm_mssql_server_extended_auditing_policy.this[0].storage_account_access_key
 }
 
 output "assessment_id" {
-  value = azurerm_mssql_server_vulnerability_assessment.this.id
+  value = var.express_va_enabled == false ? azurerm_mssql_server_vulnerability_assessment.this[0].id : null
 }
 
 output "firewall" {
