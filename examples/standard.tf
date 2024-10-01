@@ -39,7 +39,7 @@ module "sqlserver" {
   emails                                        = ["name@domain.ca"]
   retention_days                                = 90
   account_replication_type                      = "ZRS"
-
+  express_va_enabled                            = true
   */
   /*
   #[Optional] Firewall Configurations

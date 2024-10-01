@@ -1,6 +1,6 @@
 # Terraform for Azure Managed Database MSSQL Server
 
-**Current Version:** v2.0.2
+**Current Version:** v2.0.3
 
 ## Summary 
 Creates MSSQL Server for use with the Azure Managed Database for MSSQL.
@@ -75,6 +75,7 @@ No modules.
 | <a name="input_connection_policy"></a> [connection\_policy](#input\_connection\_policy) | The connection policy the server will use (Default, Proxy or Redirect) | `string` | `"Default"` | no |
 | <a name="input_emails"></a> [emails](#input\_emails) | List of email addresses that should recieve the security reports | `list(string)` | `[]` | no |
 | <a name="input_environment"></a> [environment](#input\_environment) | The environment used for keyvault access | `any` | n/a | yes |
+| <a name="input_express_va_enabled"></a> [express\_va\_enabled](#input\_express\_va\_enabled) | Is Express configuration of Vulnerability settings on Microsoft Cloud Defender being used? | `bool` | `true` | no |
 | <a name="input_firewall_rules"></a> [firewall\_rules](#input\_firewall\_rules) | Specifies the Start IP Address associated with this Firewall Rule | `list(string)` | n/a | yes |
 | <a name="input_kv_enable"></a> [kv\_enable](#input\_kv\_enable) | (Optional) Enable Key Vault for passwords. | `bool` | `false` | no |
 | <a name="input_kv_name"></a> [kv\_name](#input\_kv\_name) | The keyvault name | `string` | `""` | no |

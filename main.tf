@@ -56,6 +56,8 @@ resource "azurerm_mssql_virtual_network_rule" "this" {
 }
 
 resource "azurerm_role_assignment" "this" {
+  count = var.express_va_enabled == true ? 0 : 1
+
   description          = "${azurerm_mssql_server.mssql.name}-ra"
   scope                = data.azurerm_storage_account.storageaccountinfo[0].id
   role_definition_name = "Storage Blob Data Contributor"
@@ -68,7 +70,7 @@ resource "azurerm_role_assignment" "this" {
 }
 
 resource "azurerm_role_assignment" "mi" {
-  count                = var.primary_mi_id == null ? 0 : 1
+  count                = var.primary_mi_id == null ? 0 : (var.express_va_enabled == true ? 1 : 0)
   description          = "${azurerm_mssql_server.mssql.name}-ura"
   scope                = data.azurerm_storage_account.storageaccountinfo[0].id
   role_definition_name = "Storage Blob Data Contributor"
@@ -82,6 +84,8 @@ resource "azurerm_role_assignment" "mi" {
 
 
 resource "azurerm_mssql_server_security_alert_policy" "this" {
+  count = var.express_va_enabled == true ? 0 : 1
+
   server_name         = azurerm_mssql_server.mssql.name
   resource_group_name = var.resource_group_name
 
@@ -100,6 +104,8 @@ resource "azurerm_mssql_server_security_alert_policy" "this" {
 }
 
 resource "azurerm_mssql_server_extended_auditing_policy" "this" {
+  count = var.express_va_enabled == true ? 0 : 1
+
   server_id = azurerm_mssql_server.mssql.id
 
   storage_endpoint           = var.kv_enable ? data.azurerm_storage_account.storageaccountinfo[0].primary_blob_endpoint : azurerm_storage_account.this[0].primary_blob_endpoint
@@ -115,7 +121,9 @@ resource "azurerm_mssql_server_extended_auditing_policy" "this" {
   ]
 }
 resource "azurerm_mssql_server_vulnerability_assessment" "this" {
-  server_security_alert_policy_id = azurerm_mssql_server_security_alert_policy.this.id
+  count = var.express_va_enabled == true ? 0 : 1
+
+  server_security_alert_policy_id = azurerm_mssql_server_security_alert_policy.this[0].id
 
   storage_container_path     = var.kv_enable ? "${data.azurerm_storage_account.storageaccountinfo[0].primary_blob_endpoint}vulnerability-assessment/" : "${azurerm_storage_account.this[0].primary_blob_endpoint}${azurerm_storage_container.this[0].name}/"
   storage_account_access_key = var.kv_enable ? null : azurerm_storage_account.this[0].primary_access_key
