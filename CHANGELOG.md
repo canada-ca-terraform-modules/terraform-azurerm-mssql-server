@@ -1,3 +1,13 @@
+## 2.1.0 (May 22, 2025)
+
+FEATURES:
+
+ENHANCEMENTS:
+* `azurerm_storage_container` - change to use id instead of name, to support future versions of AzureRM.
+
+BUG FIXES:
+
+
 ## 2.0.3 (October 1, 2024)
 
 FEATURES:
