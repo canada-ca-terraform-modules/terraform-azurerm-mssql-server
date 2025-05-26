@@ -1,15 +1,17 @@
 # Terraform for Azure Managed Database MSSQL Server
 
-**Current Version:** v2.0.3
+**Current Version:** v2.1.0
 
-## Summary 
+## Summary
+
 Creates MSSQL Server for use with the Azure Managed Database for MSSQL.
 
 Examples for using the module can be found [here](examples/).
 
-Changelog can be found in [CHANGELOG.md](CHANGELOG.md) 
+Changelog can be found in [CHANGELOG.md](CHANGELOG.md)
 
 The Server will be created with the following:
+
 - Security Alert Policy
 - Extended Auditing Policy
 - Vulnerability Assesement
@@ -17,6 +19,7 @@ The Server will be created with the following:
 - Allow Azure Internal Firewall Rule
 
 Using this module you will be able to create:
+
 - [Azure SQL Server](https://docs.microsoft.com/en-us/azure/azure-sql)
 - [Azure Storage Account](https://learn.microsoft.com/en-us/azure/storage/common/storage-account-overview)
 - [Azure Private Endpoint](https://learn.microsoft.com/en-us/azure/private-link/private-endpoint-overview)
@@ -26,7 +29,7 @@ Using this module you will be able to create:
 
 See inputs and examples for reference.
 
-<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+<!-- BEGIN_TF_DOCS -->
 ## Requirements
 
 No requirements.
@@ -104,4 +107,4 @@ No modules.
 | <a name="output_name"></a> [name](#output\_name) | n/a |
 | <a name="output_sa_primary_access_key"></a> [sa\_primary\_access\_key](#output\_sa\_primary\_access\_key) | n/a |
 | <a name="output_sa_primary_blob_endpoint"></a> [sa\_primary\_blob\_endpoint](#output\_sa\_primary\_blob\_endpoint) | n/a |
-<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+<!-- END_TF_DOCS -->

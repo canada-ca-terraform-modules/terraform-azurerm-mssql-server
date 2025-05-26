@@ -17,7 +17,8 @@ resource "azurerm_storage_account" "this" {
 resource "azurerm_storage_container" "this" {
   count = var.kv_enable ? 0 : 1
 
-  name                  = "${replace(var.name, "-", "")}mssql"
-  storage_account_name  = azurerm_storage_account.this[count.index].name
+  name = "${replace(var.name, "-", "")}mssql"
+  # storage_account_name    = azurerm_storage_account.this[count.index].name
+  storage_account_id    = azurerm_storage_account.this[count.index].id
   container_access_type = "private"
 }
