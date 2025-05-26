@@ -11,7 +11,7 @@ data "azurerm_private_dns_zone" "mssql" {
 }
 
 module "sqlserver" {
-  source = "git::https://github.com/canada-ca-terraform-modules/terraform-azurerm-mssql-server.git?ref=v2.0.1"
+  source = "git::https://github.com/canada-ca-terraform-modules/terraform-azurerm-mssql-server.git?ref=v2.1.0"
 
   name                = "servername"
   environment         = "dev"
